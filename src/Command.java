@@ -9,6 +9,9 @@ abstract public class Command {
 	public abstract void input(String s) throws Exception;
 }
 
+
+
+
 class SimplifyCommand extends Command{
 	
 	private static SimplifyCommand  simplifyCommand  = new SimplifyCommand();

@@ -8,10 +8,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
+
+
+
+
 class Item{//2*x^4*y^2;
 	
 	 double coef;//系数
-	 Map<String,Integer> vars;//x^2*y^4*z
+	 Map<String,Integer> vars;
 	
 	public Map<String, Integer> getVars() {
 		return vars;
@@ -21,7 +25,6 @@ class Item{//2*x^4*y^2;
 		this.coef = i.coef;
 		this.vars = new TreeMap<>(i.vars);//TODO:unc;
 	}
-	
 	public  Item() {
 		;
 	}
