@@ -28,7 +28,7 @@ class Item{//2*x^4*y^2;
 	public  Item() {
 		;
 	}
-	
+	//modification
 	public  Item(double coef, Map<String, Integer> vars) {
 		this.coef = coef;
 		this.vars = new TreeMap<>(vars);
