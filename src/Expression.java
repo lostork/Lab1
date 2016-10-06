@@ -28,7 +28,7 @@ class Item{
 	public  Item() {
 		;
 	}
-	
+	//modification
 	public  Item(double coef, Map<String, Integer> vars) {
 		this.coef = coef;
 		this.vars = new TreeMap<>(vars);
