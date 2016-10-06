@@ -92,7 +92,7 @@ class Item{//2*x^4*y^2;
 		if (hasVariable(var)) {
 			return vars.get(var);
 		} else {
-			//throw exception;
+			
 			return -1;
 		}
 	}

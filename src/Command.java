@@ -4,6 +4,8 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
 
+
+
 abstract public class Command {
 	public abstract void execute() throws Exception;
 	public abstract void input(String s) throws Exception;
