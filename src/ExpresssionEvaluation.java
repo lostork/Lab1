@@ -51,7 +51,7 @@ public class ExpresssionEvaluation {
 			System.out.print(INPUT_PROMPT);
 			line = reader.nextLine();
 		}
-		reader.close();//TODO:unc;
+		reader.close();
 		
 	}
 }

@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 
 
-class Item{//2*x^4*y^2;
+class Item{
 	
 	 double coef;//系数
 	 Map<String,Integer> vars;
