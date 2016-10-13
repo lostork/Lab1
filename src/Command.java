@@ -18,7 +18,6 @@ class SimplifyCommand extends Command{
 	
 	
 	private  SimplifyCommand() {
-		;// TODO Auto-generated constructor stub
 	}
 	
 	public static SimplifyCommand instance() {
