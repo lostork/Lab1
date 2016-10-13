@@ -10,8 +10,6 @@ abstract public class Command {
 }
 
 
-
-
 class SimplifyCommand extends Command{
 	
 	private static SimplifyCommand  simplifyCommand  = new SimplifyCommand();
