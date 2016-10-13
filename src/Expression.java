@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 
 
-//B1分支
+//C4分支
 class Item{//2*x^4*y^2;
 	
 	 double coef;//系数
