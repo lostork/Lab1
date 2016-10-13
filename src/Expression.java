@@ -8,10 +8,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-
-
-
-
 class Item{//2*x^4*y^2;
 	
 	 double coef;//系数
