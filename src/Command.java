@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
-
+//B1分支
 abstract public class Command {
 	public abstract void execute() throws Exception;
 	public abstract void input(String s) throws Exception;
