@@ -7,7 +7,7 @@ public class ExpresssionEvaluation {
 	private static final String INPUT_PROMPT = ">";
 	private static final String END_COM = "###";
 	
-	public static void main(final String[] args)
+	public static void main(String[] args)
 	{
 		final Expression expression = Expression.instance();
 		final SimplifyCommand simplifyCommand = SimplifyCommand.instance();
@@ -23,14 +23,14 @@ public class ExpresssionEvaluation {
 						derivationCommand.input(line);
 						derivationCommand.execute();
 						expression.printDer();
-					}
-					else if (line.substring(1,9).equals("simplify")) {
+					} else if (line.substring(1,9).equals("simplify")) {
 						simplifyCommand.input(line);
 						simplifyCommand.execute();
 						expression.printSim();
+					} else {
+						System.out.println("Error, invalid input.");
 					}
-				}
-				else{
+				} else {
 					expression.input(line);
 					expression.printOri();
 				}

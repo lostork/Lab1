@@ -96,16 +96,23 @@ public class Expression{
 	Set<Item> originalExpression = new HashSet<>();
 	Set<Item> derivatedExpression= new HashSet<>();
 	Set<Item> simplifiedExpression= new HashSet<>();
+	Set<Item> tempExpression = new HashSet<>();
 	boolean isInput = false;
 	
-	private static Expression expressioning = new Expression();
+	private static Expression expression = new Expression();
 	
 	private Expression(){}
 	
 	public static Expression instance() {
-		return expressioning;
+		return expression;
 	}
 	
+	/**
+	 * add item to expression specified by dest, ORI for originalExp,DER for derExp,SIM for simplifiedExp,TMP for tempExp.
+	 * ???????????????????????????
+	 * @param dest
+	 * @param item
+	 */
 	private void addItem(final Set<Item> Exp, final Item item)
 	{
 		if (Exp.contains(item)) {
@@ -129,15 +136,14 @@ public class Expression{
 		}
 	}
 	
-	public boolean hasVariable(final String sss) {
-		boolean has = false;
-		for (final Item item : originalExpression) {
-			if (item.hasVariable(sss)) {
-				has = true;
-				break;
+	public boolean hasVariable(String string) {
+		
+		for (Item item : originalExpression) {
+			if (item.hasVariable(string)) {
+				return true;
 			}
 		}
-		return has;
+		return false;
 	}
 	
 	public void addItemToOri(final Item item) {
@@ -150,6 +156,10 @@ public class Expression{
 	
 	public void addItemToSim(final Item item) {
 		addItem(simplifiedExpression, item);
+	}
+	
+	public void addItemToTmp(Item item) {
+		addItem(tempExpression, item);
 	}
 	
 	public boolean isNum(final String sss){
@@ -198,7 +208,7 @@ public class Expression{
 				if(paratemp.length>1){
 					if(isNum(paratemp[0]))
 					{
-						throw new Exception("invalid input.£¨µ×Êý²»ÄÜÎªÊý×Ö£©");
+						throw new Exception("invalid input.ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½Ö£ï¿½");
 					}
 					if(item.vars.containsKey(paratemp[0])){
 						item.vars.put(paratemp[0], item.vars.get(paratemp[0])+Integer.parseInt(paratemp[1]));
@@ -257,36 +267,56 @@ public class Expression{
 		System.out.println("");
 	}
 
-	public void derivate(final String derVar) throws java.lang.Exception {
+	public void derivate(String derVar) throws Exception {//TODO: unc;
+		
+		if (!isInput) {
+			throw new Exception("No Expression Input!");
+		}
+		
 		derivatedExpression.clear();
-		for (final Item item : originalExpression) {
+		
+		for (Item item : originalExpression) {
 			if (item.hasVariable(derVar)) {
+				Item itemTemp = new Item();
 				int expo = item.getVarExponent(derVar);
-				item.setCoef(item.getCoef()*item.getVarExponent(derVar));
+				itemTemp.setCoef(item.getCoef()*expo);
+				itemTemp.vars = new TreeMap<String,Integer>(item.vars);
+				
 				if ((--expo) == 0) {
-					item.removeVariable(derVar);
+					itemTemp.removeVariable(derVar);
 				} else {
-					item.putVariable(derVar, expo);
+					itemTemp.putVariable(derVar, expo);
 				}
-				addItemToDer(item);
+				
+				addItemToDer(itemTemp);
 			}
 		}
 	}
 	
-	public void simplify(final Map<String, Double> parameters) throws java.lang.Exception {
-		simplifiedExpression = new HashSet<>(originalExpression);
-		Set<Item> tempExpression = new HashSet<>();
-		for (final Map.Entry<String, Double> entry : parameters.entrySet()) {
-			final String var = entry.getKey();
-			final Double para = entry.getValue();
-			for (final Item item : simplifiedExpression) {
-				final Item tempItem = new Item(item);
+	
+	public void simplify(Map<String, Double> parameters) throws Exception {
+		if (!isInput) {
+			throw new Exception("No Expression Input!");
+		}
+		simplifiedExpression = new HashSet<>(originalExpression);//TODO:unc;
+		tempExpression = new HashSet<>();
+		for (Map.Entry<String, Double> entry : parameters.entrySet()) {
+			String var = entry.getKey();
+			Double para = entry.getValue();
+			
+			for (Item item : simplifiedExpression) {
+				
+				Item tempItem = new Item(item);
 				if (item.hasVariable(var)) {
+					
 					tempItem.setCoef(tempItem.getCoef() * Math.pow(para, item.getVarExponent(var)));
+					
 					tempItem.removeVariable(var);
 				}
-				addItem(tempExpression,tempItem);
+				
+				addItemToTmp(tempItem);
 			}
+			
 			simplifiedExpression = tempExpression;
 			tempExpression = new HashSet<>();
 		}
