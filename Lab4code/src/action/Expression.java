@@ -18,9 +18,9 @@ class Item{
 		return vars;
 	}
 	
-	public Item(final Item ipp){
-		this.coef = ipp.coef;
-		this.vars = new TreeMap<>(ipp.vars);//TODO:unc;
+	public Item(final Item item){
+		this.coef = item.coef;
+		this.vars = new TreeMap<>(item.vars);//TODO:unc;
 	}
 	public  Item() {
 		;
@@ -44,18 +44,18 @@ class Item{
 		return coef > 0;
 	}
 	
-	public boolean equals(final Object obj) {
-		boolean xia = false;
+	public boolean equals(Object obj) {
 		if (this == obj) {
-			xia = true;
+			return true;
 		}
-		if (obj instanceof Item) {
-			final Item item = (Item)obj;
+		if (obj != null && obj instanceof Item) {
+			Item item = (Item)obj;
 			if (vars.equals(item.vars)) {
-				xia = true;
+				return true;
 			}
 		}
-		return xia;
+		return false;
+		
 	}
 	
 	public double getCoef() {
@@ -81,11 +81,11 @@ class Item{
 	}
 	
 	public int getVarExponent(final String var){
-		int has = -1;
+		int expo = -1;
 		if (hasVariable(var)) {
-			has = vars.get(var);
+			expo = vars.get(var);
 		} 
-		return has;
+		return expo;
 	}
 }
 

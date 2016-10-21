@@ -13,6 +13,10 @@ class SimplifyCommand extends Command{
 	private static SimplifyCommand  simCommand  = new SimplifyCommand();
 	Map<String, Double> parameters;
 	
+	private SimplifyCommand(){
+		;
+	}
+	
 	public static SimplifyCommand instance() {
 		return simCommand;
 	}
@@ -52,6 +56,10 @@ class DerivationCommand extends Command{
 	
 	private static DerivationCommand derCommand = new DerivationCommand();
 	private String derVar;
+	
+	private DerivationCommand(){
+		;
+	}
 	
 	public static DerivationCommand instance() {
 		return derCommand;
