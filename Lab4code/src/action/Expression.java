@@ -163,22 +163,19 @@ public class Expression{
 	}
 	
 	public boolean isNum(final String sss){
-		try {
-			   Integer.parseInt(sss);
-			   return true;
-			  } catch (NumberFormatException e) {
-			   return false;
-			  }
+		Pattern pattern = Pattern.compile("^[-\\+]?[.\\d]*$");
+		Matcher isnum = pattern.matcher(sss);
+		return isnum.matches();
 	}
 	
 	public void input(String sss) throws java.lang.Exception{
 		sss = sss.replaceAll(" ", "");
 		final Expression expression = Expression.instance();
 		expression.originalExpression.clear();
-		final String[] mono =  sss.split("\\+");      
-		for(int i=0;i<mono.length;i++){
-			if(mono[i].contains("-")){
-				 final String[] itemsnext = mono[i].split("-");
+		final String[] items =  sss.split("\\+");      
+		for(int i=0;i<items.length;i++){
+			if(items[i].contains("-")){
+				 final String[] itemsnext = items[i].split("-");
 				 for(int k=0;k<itemsnext.length;k++){	 
 					 final Item item = new Item();
 					 item.vars = new TreeMap<String,Integer>();
@@ -191,7 +188,7 @@ public class Expression{
 				final Item item = new Item();
 				item.coef = 1;
 				item.vars = new TreeMap<String,Integer>();
-				simpMult(mono[i], item);
+				simpMult(items[i], item);
 				expression.addItemToOri(item);
 			}
 		}
@@ -204,12 +201,8 @@ public class Expression{
 			if(isNum(paras[j])){
 				item.coef = item.coef*Double.parseDouble(paras[j]);
 			}else{
-				final String[] paratemp = paras[j].split("\\^");
-				if(paratemp.length>1){
-					if(isNum(paratemp[0]))
-					{
-						throw new Exception("invalid input.����������Ϊ���֣�");
-					}
+				String[] paratemp = paras[j].split("\\^");
+				if(paratemp.length!=1){
 					if(item.vars.containsKey(paratemp[0])){
 						item.vars.put(paratemp[0], item.vars.get(paratemp[0])+Integer.parseInt(paratemp[1]));
 					}else{
