@@ -229,22 +229,22 @@ public class Expression{
 	private void printExpression(final Set<Item> Exp){
 		boolean isFirstItem = true;
 		for (final Item item : Exp) {
-			final boolean EqualsToOne = Math.abs(item.getCoef()) < 1 + EPS 
+			final boolean equalsToOne = Math.abs(item.getCoef()) < 1 + EPS 
 					&& Math.abs(item.getCoef()) > 1 - EPS;
 			if (isFirstItem==false) {
 				if (item.IsPositive()) {
 					System.out.print(" + ");
-					if (!EqualsToOne) {
+					if (!equalsToOne || item.vars.isEmpty()) {
 						System.out.print(item.getCoef());
 					}
 				} else {
 					System.out.print(" - ");
-					if (!EqualsToOne) {
+					if (!equalsToOne  || item.vars.isEmpty()) {
 						System.out.print(-item.getCoef());
 					}
 				}
 			} else {
-				if (EqualsToOne==false) {
+				if (equalsToOne==false  || item.vars.isEmpty()) {
 					System.out.print(item.getCoef());
 				} else if (!item.IsPositive()) {
 					System.out.print("-");
@@ -267,7 +267,7 @@ public class Expression{
 		System.out.println("");
 	}
 
-	public void derivate(String derVar) throws Exception {//TODO: unc;
+public void derivate(String derVar) throws Exception {//TODO: unc;
 		
 		if (!isInput) {
 			throw new Exception("No Expression Input!");
@@ -279,10 +279,12 @@ public class Expression{
 			if (item.hasVariable(derVar)) {
 				Item itemTemp = new Item();
 				int expo = item.getVarExponent(derVar);
+				
+				//itemTemp.coef = item.coef * expo;
 				itemTemp.setCoef(item.getCoef()*expo);
 				itemTemp.vars = new TreeMap<String,Integer>(item.vars);
 				
-				if ((--expo) == 0) {
+				if ((--expo) == 0) {//TODO:unc;
 					itemTemp.removeVariable(derVar);
 				} else {
 					itemTemp.putVariable(derVar, expo);
@@ -292,6 +294,7 @@ public class Expression{
 			}
 		}
 	}
+	
 	
 	
 	public void simplify(Map<String, Double> parameters) throws Exception {
@@ -327,6 +330,7 @@ public class Expression{
 	}
 	
 	public void printDer(){
+		//System.out.println(derivatedExpression);
 		printExpression(derivatedExpression);
 	}
 	
