@@ -272,7 +272,6 @@ public void derivate(String derVar) throws Exception {//TODO: unc;
 			if (item.hasVariable(derVar)) {
 				Item itemTemp = new Item();
 				int expo = item.getVarExponent(derVar);
-				
 				//itemTemp.coef = item.coef * expo;
 				itemTemp.setCoef(item.getCoef()*expo);
 				itemTemp.vars = new TreeMap<String,Integer>(item.vars);
