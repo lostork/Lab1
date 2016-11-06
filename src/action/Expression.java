@@ -221,6 +221,10 @@ public class Expression{
 	
 	private void printExpression(final Set<Item> Exp){
 		boolean isFirstItem = true;
+		
+		if (Exp.isEmpty()) {
+			System.out.print("0");
+		}
 		for (final Item item : Exp) {
 			final boolean equalsToOne = Math.abs(item.getCoef()) < 1 + EPS 
 					&& Math.abs(item.getCoef()) > 1 - EPS;
@@ -260,14 +264,14 @@ public class Expression{
 		System.out.println("");
 	}
 
-public void derivate(String derVar) throws Exception {//TODO: unc;
-		
+	
+	
+	
+	public void derivate(String derVar) throws Exception {//TODO: unc;
 		if (!isInput) {
 			throw new Exception("No Expression Input!");
 		}
-		
 		derivatedExpression.clear();
-		
 		for (Item item : originalExpression) {
 			if (item.hasVariable(derVar)) {
 				Item itemTemp = new Item();
