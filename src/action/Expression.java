@@ -168,23 +168,8 @@ public class Expression{
 		return isnum.matches();
 	}
 	
-	public boolean isString(final String str) {
-		Pattern pattern = Pattern.compile("[0-9a-z\\-\\+\\*\\^\\.]*");
-		Matcher isstr = pattern.matcher(str);
-		return isstr.matches();
-		
-	}
 	public void input(String sss) throws java.lang.Exception{
-		
 		sss = sss.replaceAll(" ", "");
-		if(!isString(sss)) {
-			System.out.print("不是合法表达式");
-			return;
-		}
-		if(sss.length()==0) {
-			System.out.println("Error! String index out of range: 0");
-			return ;
-		}
 		final Expression expression = Expression.instance();
 		expression.originalExpression.clear();
 		final String[] items =  sss.split("\\+");      
@@ -234,8 +219,12 @@ public class Expression{
 		}
 	}	
 	
-	public void printExpression(final Set<Item> Exp){
+	private void printExpression(final Set<Item> Exp){
 		boolean isFirstItem = true;
+		
+		if (Exp.isEmpty()) {
+			System.out.print("0");
+		}
 		for (final Item item : Exp) {
 			final boolean equalsToOne = Math.abs(item.getCoef()) < 1 + EPS 
 					&& Math.abs(item.getCoef()) > 1 - EPS;
@@ -275,19 +264,18 @@ public class Expression{
 		System.out.println("");
 	}
 
+	
+	
+	
 	public void derivate(String derVar) throws Exception {//TODO: unc;
-		
 		if (!isInput) {
 			throw new Exception("No Expression Input!");
 		}
-		
 		derivatedExpression.clear();
-		
 		for (Item item : originalExpression) {
 			if (item.hasVariable(derVar)) {
 				Item itemTemp = new Item();
 				int expo = item.getVarExponent(derVar);
-				
 				//itemTemp.coef = item.coef * expo;
 				itemTemp.setCoef(item.getCoef()*expo);
 				itemTemp.vars = new TreeMap<String,Integer>(item.vars);
@@ -338,11 +326,11 @@ public class Expression{
 	}
 	
 	public void printDer(){
+		//System.out.println(derivatedExpression);
 		printExpression(derivatedExpression);
 	}
 	
 	public void printSim(){
 		printExpression(simplifiedExpression);
 	}
-	
 }
