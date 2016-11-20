@@ -80,10 +80,10 @@ class DerivationCommand extends Command{
 		{
 			throw new Exception("No Expression Input!");
 		}
-//		if (!expression.hasVariable(sss)) {
-//			throw new Exception("No variable " + sss +"!");
-//		} else {
+		if (!expression.hasVariable(sss)) {
+			throw new Exception("No variable " + sss +"!");
+		}else{
 			this.derVar = sss;
-//		}
+		}
 	}
 }

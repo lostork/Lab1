@@ -30,7 +30,7 @@ public class ExpresssionEvaluation {
 					} else {
 						System.out.println("Error, invalid input.");
 					}
-				} else {
+				} else {//此处有问题，应检查是否含有非法字符，是否是合法表达式，正则判断
 					expression.input(line);
 					expression.printOri();
 				}
