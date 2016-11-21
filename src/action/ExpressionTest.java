@@ -7,11 +7,17 @@ import java.io.PrintStream;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class ExpressionTest {
 	
 	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+	
+	@Rule  
+	public ExpectedException thrown= ExpectedException.none();
+	
 	
 	@Before
 	public void setUp() throws Exception {
@@ -43,9 +49,10 @@ public class ExpressionTest {
 	public void testInput3() throws Exception {
 		Expression expression = Expression.instance();
 		expression.originalExpression.clear();
+		thrown.expect(Exception.class);
+		thrown.expectMessage("Invalid Expression!");
 		expression.input("3&5+6*4");
-		expression.printOri();
-		assertEquals("不是合法表达式\r\n", outContent.toString());
+		
 	}
 
 
@@ -53,9 +60,10 @@ public class ExpressionTest {
 	public void testInput4() throws Exception {
 		Expression expression = Expression.instance();
 		expression.originalExpression.clear();
+		thrown.expect(Exception.class);
+		thrown.expectMessage("String index out of range: 0");
 		expression.input("");
-		expression.printOri();
-		assertEquals("Error! String index out of range: 0\r\n", outContent.toString());
+		
 		}
 
 }

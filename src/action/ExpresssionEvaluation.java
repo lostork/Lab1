@@ -31,8 +31,13 @@ public class ExpresssionEvaluation {
 						System.out.println("Error, invalid input.");
 					}
 				} else {//此处有问题，应检查是否含有非法字符，是否是合法表达式，正则判断
-					expression.input(line);
-					expression.printOri();
+					try {
+						expression.input(line);
+						expression.printOri();
+					} catch (Exception e) {
+						// TODO: handle exception
+						System.out.println("Error! "+e.getMessage());
+					}
 				}
 			}catch (Exception e) {
 				System.out.println("Error! "+e.getMessage());
