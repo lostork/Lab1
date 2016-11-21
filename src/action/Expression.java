@@ -178,12 +178,14 @@ public class Expression{
 		
 		sss = sss.replaceAll(" ", "");
 		if(!isString(sss)) {
-			System.out.print("不是合法表达式");
-			return;
+			//System.out.print("Invalid Expression!");
+			throw new Exception("Invalid Expression!");
+			//return;
 		}
 		if(sss.length()==0) {
-			System.out.print("Error! String index out of range: 0");
-			return ;
+			throw new Exception("String index out of range: 0");
+			//System.out.print("Error! String index out of range: 0");
+			//return ;
 		}
 		final Expression expression = Expression.instance();
 		expression.originalExpression.clear();
