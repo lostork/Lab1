@@ -168,8 +168,23 @@ public class Expression{
 		return isnum.matches();
 	}
 	
+	public boolean isString(final String str) {
+		Pattern pattern = Pattern.compile("[0-9a-z\\-\\+\\*\\^\\.]*");
+		Matcher isstr = pattern.matcher(str);
+		return isstr.matches();
+		
+	}
 	public void input(String sss) throws java.lang.Exception{
+		
 		sss = sss.replaceAll(" ", "");
+		if(!isString(sss)) {
+			System.out.print("不是合法表达式");
+			return;
+		}
+		if(sss.length()==0) {
+			System.out.print("Error! String index out of range: 0");
+			return ;
+		}
 		final Expression expression = Expression.instance();
 		expression.originalExpression.clear();
 		final String[] items =  sss.split("\\+");      
