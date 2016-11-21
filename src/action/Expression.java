@@ -182,7 +182,7 @@ public class Expression{
 			return;
 		}
 		if(sss.length()==0) {
-			System.out.println("Error! String index out of range: 0");
+			System.out.print("Error! String index out of range: 0");
 			return ;
 		}
 		final Expression expression = Expression.instance();
