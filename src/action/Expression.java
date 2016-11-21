@@ -234,8 +234,12 @@ public class Expression{
 		}
 	}	
 	
-	public void printExpression(final Set<Item> Exp){
+	private void printExpression(final Set<Item> Exp){
 		boolean isFirstItem = true;
+		
+		if (Exp.isEmpty()) {
+			System.out.print("0");
+		}
 		for (final Item item : Exp) {
 			final boolean equalsToOne = Math.abs(item.getCoef()) < 1 + EPS 
 					&& Math.abs(item.getCoef()) > 1 - EPS;
@@ -275,19 +279,18 @@ public class Expression{
 		System.out.println("");
 	}
 
+	
+	
+	
 	public void derivate(String derVar) throws Exception {//TODO: unc;
-		
 		if (!isInput) {
 			throw new Exception("No Expression Input!");
 		}
-		
 		derivatedExpression.clear();
-		
 		for (Item item : originalExpression) {
 			if (item.hasVariable(derVar)) {
 				Item itemTemp = new Item();
 				int expo = item.getVarExponent(derVar);
-				
 				//itemTemp.coef = item.coef * expo;
 				itemTemp.setCoef(item.getCoef()*expo);
 				itemTemp.vars = new TreeMap<String,Integer>(item.vars);
@@ -338,11 +341,11 @@ public class Expression{
 	}
 	
 	public void printDer(){
+		//System.out.println(derivatedExpression);
 		printExpression(derivatedExpression);
 	}
 	
 	public void printSim(){
 		printExpression(simplifiedExpression);
 	}
-	
 }
