@@ -310,7 +310,6 @@ public class Expression{
 			if (item.hasVariable(derVar)) {
 				Item itemTemp = new Item();
 				int expo = item.getVarExponent(derVar);
-				//itemTemp.coef = item.coef * expo;
 				itemTemp.setCoef(item.getCoef()*expo);
 				itemTemp.setVars(new TreeMap<String,Integer>(item.getVars()));
 				
