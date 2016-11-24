@@ -11,9 +11,13 @@ import java.util.regex.Pattern;
 
 class Item{
 	
-	 double coef;
-	 Map<String,Integer> vars;
+	private double coef;
+	private Map<String,Integer> vars;
 	
+	public void setVars(Map<String, Integer> vars) {
+		this.vars = vars;
+	}
+
 	public Map<String, Integer> getVars() {
 		return vars;
 	}
@@ -93,16 +97,24 @@ public class Expression{
 	
 	public static final double EPS = 0.00001;
 	
-	Set<Item> originalExpression = new HashSet<>();
-	Set<Item> derivatedExpression= new HashSet<>();
-	Set<Item> simplifiedExpression= new HashSet<>();
-	Set<Item> tempExpression = new HashSet<>();
-	boolean isInput = false;
+	private Set<Item> originalExpression = new HashSet<>();
+	private Set<Item> derivatedExpression= new HashSet<>();
+	private Set<Item> simplifiedExpression= new HashSet<>();
+	private Set<Item> tempExpression = new HashSet<>();
+	private boolean isInput = false;
 	
 	private static Expression expression = new Expression();
 	
 	private Expression(){}
 	
+	public boolean isInput() {
+		return isInput;
+	}
+
+	public void setInput(boolean isInput) {
+		this.isInput = isInput;
+	}
+
 	public static Expression instance() {
 		return expression;
 	}
@@ -195,16 +207,20 @@ public class Expression{
 				 final String[] itemsnext = items[i].split("-");
 				 for(int k=0;k<itemsnext.length;k++){	 
 					 final Item item = new Item();
-					 item.vars = new TreeMap<String,Integer>();
-					 if(k==0) {item.coef=1;}
-					 else {item.coef = -1;}
+//					 item.vars = new TreeMap<String,Integer>();
+					 item.setVars(new TreeMap<>());
+					 //2 line below has changes
+					 if(k==0) {item.setCoef(1);}
+					 else {item.setCoef(-1);}
 					 simpMult(itemsnext[k],item);
 					 expression.addItemToOri(item);
 				}
 			 } else{
 				final Item item = new Item();
-				item.coef = 1;
-				item.vars = new TreeMap<String,Integer>();
+//				item.coef = 1;
+				item.setCoef(1);
+//				item.vars = new TreeMap<String,Integer>();
+				item.setVars(new TreeMap<>());
 				simpMult(items[i], item);
 				expression.addItemToOri(item);
 			}
@@ -216,20 +232,23 @@ public class Expression{
 		final String[] paras = sss.split("\\*");
 		for(int j=0;j<paras.length;j++){
 			if(isNum(paras[j])){
-				item.coef = item.coef*Double.parseDouble(paras[j]);
+//				item.coef = item.coef*Double.parseDouble(paras[j]);
+				item.setCoef(item.getCoef() * Double.parseDouble(paras[j]));
 			}else{
 				String[] paratemp = paras[j].split("\\^");
+				Map<String, Integer> vars = item.getVars();
 				if(paratemp.length!=1){
-					if(item.vars.containsKey(paratemp[0])){
-						item.vars.put(paratemp[0], item.vars.get(paratemp[0])+Integer.parseInt(paratemp[1]));
+					//if(item.vars.containsKey(paratemp[0]))
+					if(vars.containsKey(paratemp[0])){
+						vars.put(paratemp[0], vars.get(paratemp[0])+Integer.parseInt(paratemp[1]));
 					}else{
-						item.vars.put(paratemp[0], Integer.parseInt(paratemp[1]));
+						vars.put(paratemp[0], Integer.parseInt(paratemp[1]));
 					}
 				}else{
-					if(item.vars.containsKey(paras[j])){
-						item.vars.put(paras[j], item.vars.get(paras[j])+1);
+					if(vars.containsKey(paras[j])){
+						vars.put(paras[j], vars.get(paras[j])+1);
 					}else{
-						item.vars.put(paras[j], 1);
+						vars.put(paras[j], 1);
 					}
 				}
 			}
@@ -248,17 +267,17 @@ public class Expression{
 			if (isFirstItem==false) {
 				if (item.IsPositive()) {
 					System.out.print(" + ");
-					if (!equalsToOne || item.vars.isEmpty()) {
+					if (!equalsToOne || item.getVars().isEmpty()) {
 						System.out.print(item.getCoef());
 					}
 				} else {
 					System.out.print(" - ");
-					if (!equalsToOne  || item.vars.isEmpty()) {
+					if (!equalsToOne  || item.getVars().isEmpty()) {
 						System.out.print(-item.getCoef());
 					}
 				}
 			} else {
-				if (equalsToOne==false  || item.vars.isEmpty()) {
+				if (equalsToOne==false  || item.getVars().isEmpty()) {
 					System.out.print(item.getCoef());
 				} else if (!item.IsPositive()) {
 					System.out.print("-");
@@ -295,7 +314,7 @@ public class Expression{
 				int expo = item.getVarExponent(derVar);
 				//itemTemp.coef = item.coef * expo;
 				itemTemp.setCoef(item.getCoef()*expo);
-				itemTemp.vars = new TreeMap<String,Integer>(item.vars);
+				itemTemp.setVars(new TreeMap<String,Integer>(item.getVars()));
 				
 				if ((--expo) == 0) {//TODO:unc;
 					itemTemp.removeVariable(derVar);

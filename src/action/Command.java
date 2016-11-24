@@ -40,7 +40,7 @@ class SimplifyCommand extends Command{
 			this.parameters.put(var[0], Double.parseDouble(var[1]));
 		}	
 		final Expression expression = Expression.instance();
-		if(!expression.isInput)
+		if(!expression.isInput())
 		{
 			throw new Exception("No Expression Input!");
 		}
@@ -76,7 +76,7 @@ class DerivationCommand extends Command{
 		sss = sss.replaceAll(" ", "");
 		sss = sss.substring("!d/d".length());
 		final Expression expression = Expression.instance();
-		if(!expression.isInput)
+		if(!expression.isInput())
 		{
 			throw new Exception("No Expression Input!");
 		}
