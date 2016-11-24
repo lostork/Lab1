@@ -11,7 +11,7 @@ public abstract class Command {
 class SimplifyCommand extends Command{
 	
 	private static SimplifyCommand  simCommand  = new SimplifyCommand();
-	Map<String, Double> parameters;
+	private Map<String, Double> parameters;
 	
 	private SimplifyCommand(){
 		;
